@@ -15,7 +15,7 @@
 ---
 
 ## 📖 Project Overview
-**Transit Matchmaker** is a full-stack web application designed for college campuses to resolve a pervasive commuter pain point: splitting transit fares. Students frequently travel from campus to major local transit hubs—such as railway stations, airports, or central bus stands—individually, resulting in high out-of-pocket costs for auto-rickshaws or private cabs. 
+**Transit Matchmaker** is a full-stack web application designed for college campuses to resolve a pervasive commuter pain point: splitting transit fares. Students frequently travel from campus to major local transit hubs such as railway stations, airports, or central bus stands individually, resulting in high costs for auto rickshaws or private cabs. 
 
 This platform allows students to securely register, log in, post their upcoming travel plans (departure points, destinations, dates, and flexible departure time windows), and run a **custom relational matching algorithm** to find other students traveling along the exact same route within a synchronized timeframe. By providing immediate email links, it bridges the gap between disconnected campus commuters, effectively reducing individual travel expenses and the student carbon footprint.
 
@@ -27,8 +27,8 @@ This project was built from scratch as a comprehensive capstone showcasing a sol
 - **Secure Authentication & Session Security:** Complete implementation of user registration, login, and session tracking. Passwords are secure and never stored in plain text; they are protected using robust cryptographic PBKDF2 hashing algorithms via `werkzeug.security`.
 - **Dynamic User Dashboard (Full CRUD):** Unauthenticated visitors are greeted with a clean, conversion-focused landing page. Once authenticated, the dashboard dynamically updates to query, display, and manage the user's active travel itineraries.
 - **The Matchmaker Engine (Relational SQL JOIN):** A custom backend query parses the database to locate matches. It isolates travel schedules matching the exact destination and date, ensures users cannot match with themselves, and sorts results sequentially based on the departure time window.
-- **Form Interception & Server-Side Validation:** Form inputs are heavily verified on the backend. The app protects database integrity by intercepting chronological logic errors—such as preventing a user from setting a 'Latest Departure Time' that precedes their 'Earliest Departure Time'.
-- **Modern Theme-Aware UI (Bootstrap 5 & LocalStorage):** Fully optimized using modern components (Cards, Forms, Navbars, Grid System) making the tool 100% mobile-responsive. Features a seamless **Dark Mode toggle** that syncs with the browser's native `localStorage` API to maintain state across page refreshes without any flashing.
+- **Form Interception & Server-Side Validation:** Form inputs are heavily verified on the backend. The app protects database integrity by intercepting chronological logic errors such as preventing a user from setting a 'Latest Departure Time' that precedes their 'Earliest Departure Time'.
+- **Modern Theme-Aware UI (Bootstrap 5 & LocalStorage):** Fully optimized using modern components (Cards, Forms, Navbars, Grid System) making the tool 100% mobile responsive. Features a seamless **Dark Mode toggle** that syncs with the browser's native `localStorage` API to maintain state across page refreshes without any flashing.
 - **Asynchronous User Feedback:** Implements Flask Flash Alert routing mapped directly to Bootstrap's dismissible utility classes, utilizing customized JavaScript hooks to automatically fade out alerts after 3 seconds for a cleaner user experience while leaving critical persistent warnings untouched.
 
 ---
@@ -36,14 +36,14 @@ This project was built from scratch as a comprehensive capstone showcasing a sol
 ## 🛠️ Tech Stack & Architecture
 
 ### **Backend Core:**
-- **Python / Flask:** Handles HTTP routing, request parsing, cookie-based session management, validation, and core application business logic.
+- **Python / Flask:** Handles HTTP routing, request parsing, cookie based session management, validation, and core application business logic.
 - **Gunicorn:** Actively handles production WSGI server processes for stable cloud deployment.
 - **SQLite3:** A lightweight, dependable relational database used for transactional storage of user profiles and travel schedules.
 
 ### **Frontend Core:**
-- **Jinja2 Template Engine:** Used for server-side layout inheritance, template segmentation, and dynamic data binding.
+- **Jinja2 Template Engine:** Used for server side layout inheritance, template segmentation, and dynamic data binding.
 - **Bootstrap 5.3:** Acts as the presentation layer framework, supplying grid mechanics, dark/light utility classes, and system component styling.
-- **Vanilla JavaScript:** Powers client-side interactivity, theme persistence loops via `localStorage`, and asynchronous UI animations.
+- **JavaScript:** Powers client side interactivity, theme persistence loops via `localStorage`, and asynchronous UI animations.
 
 ---
 
@@ -79,14 +79,14 @@ transit-matchmaker/
 ├── app.py                 # Core controller, route configurations, and validation engine
 ├── schema.sql             # Relational database initialization script
 ├── transit.db             # SQLite binary database file (Generated runtime instance)
-├── requirements.txt       # Production dependencies list for cloud deployment
+├── requirements.txt       # Production dependencies list
 ├── .gitignore             # Explicit environment and operating system file exclusion rules
 │
 ├── static/
 │   ├── css/
 │   │   └── styles.css     # Theme extension styles and custom visual overrides
 │   └── js/
-│       └── script.js      # Dark Mode state logic and flash alert auto-dismiss timers
+│       └── script.js      # Dark Mode state logic and flash alert auto dismiss timers
 │
 └── templates/
     ├── layout.html        # Master boilerplate layout containing HTML head, responsive navbar, and scripts
@@ -126,4 +126,5 @@ sqlite3 transit.db < schema.sql
 python3 app.py
 ```
 6. **Access App:** 
+
 Open your web browser and navigate to http://127.0.0.1:5000.
