@@ -10,7 +10,6 @@
 
 ## 🔗 Project Links
 - **Live Production URL:** https://transit-matchmaker.onrender.com/
-- **Video Demo Walkthrough:** [YouTube URL]
 
 ---
 
@@ -131,5 +130,4 @@ sqlite3 transit.db < schema.sql
 python3 app.py
 ```
 6. **Access App:** 
-
 Open your web browser and navigate to http://127.0.0.1:5000.
