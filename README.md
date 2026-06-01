@@ -103,7 +103,7 @@ Follow these steps to spin up the development environment on your local system:
 1. **Clone the Repository:**
 
 ```Bash
-git clone [https://github.com/madhavcodes25/transit-matchmaker.git](https://github.com/madhavcodes25/transit-matchmaker.git)
+git clone https://github.com/madhavcodes25/transit-matchmaker.git
 cd transit-matchmaker
 ```
 2. **Initialize Python Virtual Environment:**
