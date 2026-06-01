@@ -71,6 +71,9 @@ CREATE TABLE trips (
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 ```
+
+---
+
 ## 📂 Codebase File Structure
 
 ```
@@ -96,6 +99,8 @@ transit-matchmaker/
     ├── add_trip.html      # Transactional travel schedule submission form
     └── matches.html       # Dynamic match collection and contact generation view
 ```
+
+---
 
 ## 🚀 Installation & Local Environment Setup
 Follow these steps to spin up the development environment on your local system:
