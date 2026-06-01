@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    
+    {% if session.get('user_id') %}
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-body-emphasis m-0">My Upcoming Trips</h2>
+        </div>
+
+        {% if trips %}
+            <div class="row g-4">
+                {% for trip in trips %}
+                    <div class="col-md-6">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary fw-bold">{{ trip.departure_point }} ➔ {{ trip.destination }}</h5>
+                                <hr>
+                                <p class="card-text mb-1"><strong>📅 Date:</strong> {{ trip.travel_date }}</p>
+                                <p class="card-text"><strong>🕒 Window:</strong> {{ trip.time_window_start }} - {{ trip.time_window_end }}</p>
+                                
+                                <div class="d-flex gap-2 mt-4">
+                                    <a href="/find_matches/{{ trip.id }}" class="btn btn-primary w-100 fw-bold">Find Buddies</a>
+                                    <form action="/delete_trip/{{ trip.id }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this trip?');" class="w-100">
+                                        <button type="submit" class="btn btn-outline-danger w-100 fw-bold">Cancel</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning shadow-sm border-0" role="alert">
+                You haven't posted any travel plans yet. Post a trip to find buddies!
+            </div>
+        {% endif %}
+
+    {% else %}
+        <div class="text-center py-5 px-3 bg-body-tertiary rounded shadow-sm border-0">
+            <h1 class="display-5 fw-bold text-body-emphasis mb-3">Split Fares. Save Money.</h1>
+            <p class="lead text-muted mb-4">Find other students leaving campus to split cab or auto fares to the railway station or airport!</p>
+            <div>
+                <a href="/register" class="btn btn-primary btn-lg px-4 me-2 shadow-sm fw-bold">Get Started</a>
+                <a href="/login" class="btn btn-outline-secondary btn-lg px-4 shadow-sm fw-bold">Login</a>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

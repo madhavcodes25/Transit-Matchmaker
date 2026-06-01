@@ -216,3 +216,15 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# macOS junk files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Python environment & cache
+__pycache__/
+*.pyc
+venv/
+.env
+transit.db

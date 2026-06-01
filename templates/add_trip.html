@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h3 class="card-title fw-bold mb-1">Post Your Travel Plans</h3>
+                <p class="text-muted mb-4">Enter your departure details to find travel buddies.</p>
+                
+                <form action="/add_trip" method="POST">
+                    <div class="mb-3">
+                        <label for="departure_point" class="form-label fw-bold">Leaving From</label>
+                        <input type="text" class="form-control" id="departure_point" name="departure_point" placeholder="e.g., SVNIT Hostel B" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="destination" class="form-label fw-bold">Going To</label>
+                        <select class="form-select" id="destination" name="destination" required>
+                            <option value="" selected disabled>Choose your destination...</option>
+                            <option value="Surat Railway Station">Surat Railway Station</option>
+                            <option value="Surat Airport">Surat Airport</option>
+                            <option value="Bus Stand">Central Bus Stand</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="travel_date" class="form-label fw-bold">Date of Travel</label>
+                        <input type="date" class="form-control" id="travel_date" name="travel_date" required>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="time_window_start" class="form-label fw-bold">Earliest Departure</label>
+                            <input type="time" class="form-control" id="time_window_start" name="time_window_start" required>
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label for="time_window_end" class="form-label fw-bold">Latest Departure</label>
+                            <input type="time" class="form-control" id="time_window_end" name="time_window_end" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100 fw-bold py-2">Post Trip</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
