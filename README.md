@@ -23,10 +23,10 @@ This project was built from scratch as a comprehensive capstone showcasing a sol
 ---
 
 ## ⚡ Key Features
-- **Smart Time-Window Matching (NEW):** The backend algorithm calculates true overlaps between students' time windows. It isolates travel schedules matching the exact destination and date, ensures users cannot match with themselves, and only shows matches whose schedules intersect yours.
-- **WhatsApp Integration (NEW):** Optionally provide your WhatsApp number on registration. If a matched buddy has provided theirs, a convenient "WhatsApp" button pre-fills a message directly in the app.
-- **Recurring Trips & Auto-Expiry (NEW):** Mark your weekly commutes as "Repeat weekly" and the system automatically rolls the date forward. Past non-recurring trips are automatically filtered out to keep your dashboard clean.
-- **Live Match Badges (NEW):** The dashboard dynamically updates with badges to show exactly how many overlapping travel buddies you have for each upcoming trip.
+- **Smart Time-Window Matching :** The backend algorithm calculates true overlaps between students' time windows. It isolates travel schedules matching the exact destination and date, ensures users cannot match with themselves, and only shows matches whose schedules intersect yours.
+- **WhatsApp Integration :** Optionally provide your WhatsApp number on registration. If a matched buddy has provided theirs, a convenient "WhatsApp" button pre-fills a message directly in the app.
+- **Recurring Trips & Auto-Expiry :** Mark your weekly commutes as "Repeat weekly" and the system automatically rolls the date forward. Past non-recurring trips are automatically filtered out to keep your dashboard clean.
+- **Live Match Badges :** The dashboard dynamically updates with badges to show exactly how many overlapping travel buddies you have for each upcoming trip.
 - **Secure Authentication & Session Security:** Complete implementation of user registration, login, and session tracking. Passwords are secure and never stored in plain text; they are protected using robust cryptographic PBKDF2 hashing algorithms via `werkzeug.security`.
 - **Form Interception & Server-Side Validation:** Form inputs are heavily verified on the backend. The app protects database integrity by intercepting chronological logic errors such as preventing a user from setting a 'Latest Departure Time' that precedes their 'Earliest Departure Time'.
 - **Modern Theme-Aware UI (Custom CSS & LocalStorage):** Fully optimized using a completely custom, gradient-driven CSS design system (dropping heavy UI frameworks). Features a seamless **Dark Mode toggle** that syncs with the browser's native `localStorage` API to maintain state across page refreshes without any flashing.
