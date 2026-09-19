@@ -3,7 +3,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Framework: Flask](https://img.shields.io/badge/Framework-Flask-000000?style=flat&logo=flask)](https://flask.palletsprojects.com/)
-[![Frontend: Bootstrap 5](https://img.shields.io/badge/Frontend-Bootstrap%205-7952B3?style=flat&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
+[![Frontend: Custom CSS](https://img.shields.io/badge/Frontend-Custom%20CSS-1572B6?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![Database: SQLite](https://img.shields.io/badge/Database-SQLite-003B57?style=flat&logo=sqlite&logoColor=white)](https://sqlite.org/)
 
 ---
@@ -16,19 +16,21 @@
 ## 📖 Project Overview
 **Transit Matchmaker** is a full-stack web application designed for college campuses to resolve a pervasive commuter pain point: splitting transit fares. Students frequently travel from campus to major local transit hubs such as railway stations, airports, or central bus stands individually, resulting in high costs for auto rickshaws or private cabs. 
 
-This platform allows students to securely register, log in, post their upcoming travel plans (departure points, destinations, dates, and flexible departure time windows), and run a **custom relational matching algorithm** to find other students traveling along the exact same route within a synchronized timeframe. By providing immediate email links, it bridges the gap between disconnected campus commuters, effectively reducing individual travel expenses and the student carbon footprint.
+This platform allows students to securely register, log in, post their upcoming travel plans (departure points, destinations, dates, and flexible departure time windows), and run a **custom relational matching algorithm** to find other students traveling along the exact same route within a synchronized timeframe. By providing immediate WhatsApp or email links, it bridges the gap between disconnected campus commuters, effectively reducing individual travel expenses and the student carbon footprint.
 
-This project was built from scratch as a comprehensive capstone showcasing a solid understanding of backend MVC architecture, relational database design, secure session state management, production deployment pipelines, and responsive user interfaces.
+This project was built from scratch as a comprehensive capstone showcasing a solid understanding of backend MVC architecture, relational database design, secure session state management, production deployment pipelines, and fully custom responsive user interfaces.
 
 ---
 
 ## ⚡ Key Features
+- **Smart Time-Window Matching (NEW):** The backend algorithm calculates true overlaps between students' time windows. It isolates travel schedules matching the exact destination and date, ensures users cannot match with themselves, and only shows matches whose schedules intersect yours.
+- **WhatsApp Integration (NEW):** Optionally provide your WhatsApp number on registration. If a matched buddy has provided theirs, a convenient "WhatsApp" button pre-fills a message directly in the app.
+- **Recurring Trips & Auto-Expiry (NEW):** Mark your weekly commutes as "Repeat weekly" and the system automatically rolls the date forward. Past non-recurring trips are automatically filtered out to keep your dashboard clean.
+- **Live Match Badges (NEW):** The dashboard dynamically updates with badges to show exactly how many overlapping travel buddies you have for each upcoming trip.
 - **Secure Authentication & Session Security:** Complete implementation of user registration, login, and session tracking. Passwords are secure and never stored in plain text; they are protected using robust cryptographic PBKDF2 hashing algorithms via `werkzeug.security`.
-- **Dynamic User Dashboard (Full CRUD):** Unauthenticated visitors are greeted with a clean, conversion-focused landing page. Once authenticated, the dashboard dynamically updates to query, display, and manage the user's active travel itineraries.
-- **The Matchmaker Engine (Relational SQL JOIN):** A custom backend query parses the database to locate matches. It isolates travel schedules matching the exact destination and date, ensures users cannot match with themselves, and sorts results sequentially based on the departure time window.
 - **Form Interception & Server-Side Validation:** Form inputs are heavily verified on the backend. The app protects database integrity by intercepting chronological logic errors such as preventing a user from setting a 'Latest Departure Time' that precedes their 'Earliest Departure Time'.
-- **Modern Theme-Aware UI (Bootstrap 5 & LocalStorage):** Fully optimized using modern components (Cards, Forms, Navbars, Grid System) making the tool 100% mobile responsive. Features a seamless **Dark Mode toggle** that syncs with the browser's native `localStorage` API to maintain state across page refreshes without any flashing.
-- **Asynchronous User Feedback:** Implements Flask Flash Alert routing mapped directly to Bootstrap's dismissible utility classes, utilizing customized JavaScript hooks to automatically fade out alerts after 3 seconds for a cleaner user experience while leaving critical persistent warnings untouched.
+- **Modern Theme-Aware UI (Custom CSS & LocalStorage):** Fully optimized using a completely custom, gradient-driven CSS design system (dropping heavy UI frameworks). Features a seamless **Dark Mode toggle** that syncs with the browser's native `localStorage` API to maintain state across page refreshes without any flashing.
+- **Asynchronous User Feedback:** Implements Flask Flash Alert routing utilizing customized JavaScript hooks to automatically fade out alerts and CSS animations for a clean, non-disruptive user experience.
 
 ---
 
@@ -41,7 +43,7 @@ This project was built from scratch as a comprehensive capstone showcasing a sol
 
 ### **Frontend Core:**
 - **Jinja2 Template Engine:** Used for server side layout inheritance, template segmentation, and dynamic data binding.
-- **Bootstrap 5.3:** Acts as the presentation layer framework, supplying grid mechanics, dark/light utility classes, and system component styling.
+- **Custom CSS:** A completely bespoke, modern design system utilizing CSS variables, Flexbox, CSS Grid, and inline SVG iconography.
 - **JavaScript:** Powers client side interactivity, theme persistence loops via `localStorage`, and asynchronous UI animations.
 
 ---
@@ -55,7 +57,8 @@ CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
+    password_hash TEXT NOT NULL,
+    phone TEXT -- Optional WhatsApp number
 );
 
 -- 2. Trips Transactional Table
@@ -67,6 +70,7 @@ CREATE TABLE trips (
     travel_date TEXT NOT NULL,
     time_window_start TEXT NOT NULL,
     time_window_end TEXT NOT NULL,
+    is_recurring INTEGER DEFAULT 0, -- Weekly rollover flag
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 ```
@@ -86,7 +90,7 @@ transit-matchmaker/
 │
 ├── static/
 │   ├── css/
-│   │   └── styles.css     # Theme extension styles and custom visual overrides
+│   │   └── styles.css     # Bespoke design system and modern UI variables
 │   └── js/
 │       └── script.js      # Dark Mode state logic and flash alert auto dismiss timers
 │
@@ -127,7 +131,7 @@ sqlite3 transit.db < schema.sql
 
 5. **Fire up the Development Server:**
 ```Bash
-python3 app.py
+PORT=5001 python3 app.py
 ```
 6. **Access App:** 
-Open your web browser and navigate to http://127.0.0.1:5000.
+Open your web browser and navigate to http://127.0.0.1:5001.

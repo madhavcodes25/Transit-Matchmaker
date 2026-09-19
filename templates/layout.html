@@ -4,56 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transit Matchmaker</title>
-    
+
     <script>
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-bs-theme', savedTheme);
     </script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="/">Transit Matchmaker</a>
-            <div class="d-flex align-items-center">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a class="navbar-brand" href="/" aria-label="Transit Matchmaker Home" style="padding: 0;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <defs>
+                        <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#2563eb" />
+                            <stop offset="100%" stop-color="#7c3aed" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="6" cy="18" r="3" />
+                    <circle cx="18" cy="6" r="3" />
+                    <path d="M9 18h2.09a5.97 5.97 0 0 0 5.42-3.41l.9-1.92A5.97 5.97 0 0 1 22 10.37" />
+                </svg>
+            </a>
+            <div class="nav-actions">
                 {% if session.get('user_id') %}
-                    <a class="btn btn-success btn-sm me-3 fw-bold" href="/add_trip">+ Add Trip</a>
-                    <a class="text-light text-decoration-none me-3" href="/logout">Logout</a>
+                    <a class="btn-nav" href="/add_trip">+ New Trip</a>
+                    <a class="nav-link-plain" href="/logout">Logout</a>
                 {% else %}
-                    <a class="text-light text-decoration-none me-3" href="/login">Login</a>
-                    <a class="btn btn-primary btn-sm fw-bold me-3" href="/register">Register</a>
+                    <a class="nav-link-plain" href="/login">Login</a>
+                    <a class="btn-nav" href="/register">Sign up</a>
                 {% endif %}
-                
-                <button id="darkModeToggle" class="btn btn-outline-light btn-sm fw-bold">🌙 Dark</button>
+                <button id="darkModeToggle" class="theme-toggle" title="Toggle theme" aria-label="Toggle dark mode">
+                    <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                </button>
             </div>
         </div>
     </nav>
 
-    <div class="container" style="max-width: 900px;">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-wrap">
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' if category == 'error' else 'info' }} alert-dismissible fade show shadow-sm" role="alert">
+                    <div class="flash flash-{{ 'success' if category == 'success' else 'error' if category == 'error' else 'info' }}">
+                        {% if category == 'success' %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
+                        {% elif category == 'error' %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        {% endif %}
                         {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button class="flash-close" onclick="this.parentElement.remove()" aria-label="Dismiss">&times;</button>
                     </div>
                 {% endfor %}
-            {% endif %}
-        {% endwith %}
+            </div>
+        {% endif %}
+    {% endwith %}
 
-        <main>
-            {% block content %}{% endblock %}
-        </main>
-    </div>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 
-    <footer class="text-center mt-5 py-4 text-muted">
-        <p class="mb-0">&copy; 2026 Transit Matchmaker for Campus Commutes</p>
+    <footer>
+        <div class="footer-inner">
+            <span class="footer-copy">&copy; 2026 Transit Matchmaker &mdash; Campus Commute Sharing</span>
+            <span class="footer-copy">Built for SVNIT students</span>
+        </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

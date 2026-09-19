@@ -1,28 +1,31 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="row justify-content-center mt-5">
-    <div class="col-md-6 col-lg-5">
-        <div class="card shadow-sm border-0">
-            <div class="card-body p-4">
-                <h3 class="card-title text-center fw-bold mb-4">Welcome Back</h3>
-                
-                <form action="/login" method="POST">
-                    <div class="mb-3">
-                        <label for="email" class="form-label fw-bold">College Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="password" class="form-label fw-bold">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100 fw-bold">Login</button>
-                </form>
-                
-                <div class="text-center mt-3">
-                    <p class="mb-0 text-muted">New here? <a href="/register" class="text-decoration-none fw-bold">Create an account</a></p>
-                </div>
+<div class="form-page">
+    <div class="form-card">
+        <div class="form-card-header">
+            <h2 class="form-heading">Welcome back</h2>
+            <p class="form-subheading">Sign in to your Transit Matchmaker account</p>
+        </div>
+
+        <form action="/login" method="POST">
+            <div class="field">
+                <label class="field-label" for="email">College Email</label>
+                <input class="field-input" type="email" id="email" name="email" placeholder="you@svnit.ac.in" autocomplete="email" required>
             </div>
+            <div class="field">
+                <label class="field-label" for="password">Password</label>
+                <input class="field-input" type="password" id="password" name="password" placeholder="Your password" autocomplete="current-password" required>
+            </div>
+            <div class="form-submit">
+                <button type="submit" class="btn-primary btn-full" style="padding:11px;">Sign In</button>
+            </div>
+        </form>
+
+        <div class="form-divider">or</div>
+
+        <div class="form-footer">
+            <p>Don't have an account? <a href="/register">Create one</a></p>
         </div>
     </div>
 </div>
